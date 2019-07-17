@@ -13,6 +13,8 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.EntityFrameworkCore;
 using DatingApp.Api.Services;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DatingApp.Api
 {
@@ -33,6 +35,16 @@ namespace DatingApp.Api
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddCors();
             services.AddScoped<IAuthRepository,AuthService>();
+            services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme).AddJwtBearer(Options=>{
+
+                Options.TokenValidationParameters=new  TokenValidationParameters{
+
+                    ValidateIssuerSigningKey=true,
+                    IssuerSigningKey= new SymmetricSecurityKey(System.Text.Encoding.UTF8.GetBytes( "super secret key")),
+                    ValidateIssuer = false,
+                    ValidateAudience = false
+                };
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -50,6 +62,7 @@ namespace DatingApp.Api
 
             app.UseHttpsRedirection();
             app.UseCors(c =>c.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod() );
+           app.UseAuthentication();
             app.UseMvc();
         }
     }

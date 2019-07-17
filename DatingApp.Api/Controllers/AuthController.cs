@@ -6,11 +6,13 @@ using System.Threading.Tasks;
 using DatingApp.Api.Data;
 using DatingApp.Api.DTOs;
 using DatingApp.Api.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 
 namespace DatingApp.Api.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AuthController : ControllerBase
@@ -21,6 +23,7 @@ namespace DatingApp.Api.Controllers
             _Auth = Auth;
 
         }
+        [AllowAnonymous]
         [HttpPost("register")]
         public async Task<IActionResult> Register(RegisterUserDTO registerUserDTO)
         {
@@ -37,6 +40,7 @@ namespace DatingApp.Api.Controllers
 
 
         }
+        [AllowAnonymous]
 [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginUserDTO LoginUserDTO)
         {

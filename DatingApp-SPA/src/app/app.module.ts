@@ -5,18 +5,24 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { ValuesComponent } from './values/values.component';
 import { HttpClient } from 'selenium-webdriver/http';
+import { NavComponent } from './Nav/Nav.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { AuthService } from './_services/Auth.service';
 
 @NgModule({
    declarations: [
       AppComponent,
-      ValuesComponent
+      ValuesComponent,
+      NavComponent
    ],
    imports: [
       BrowserModule,
       AppRoutingModule,
-      HttpClientModule
+      HttpClientModule,
+      FormsModule ,
+      ReactiveFormsModule
    ],
-   providers: [],
+   providers: [AuthService],
    bootstrap: [
       AppComponent
    ]

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { FormGroup, FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-values',
@@ -7,13 +8,23 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./values.component.css']
 })
 export class ValuesComponent implements OnInit {
-  values: any;
   constructor(private http: HttpClient) {}
+  values: any;
+
+   profileform = new FormGroup({
+           
+    username : new FormControl( ) ,
+    password : new FormControl( ) ,
+     Addressform : new FormGroup({
+      city : new FormControl( ) ,
+      street : new FormControl( ) ,
+      state : new FormControl( ) ,
+     })
+    });
 
   ngOnInit() {
     this.getValues();
   }
-
   getValues() {
     this.http.get('http://localhost:5000/api/Values').subscribe(
       c => {
@@ -23,5 +34,9 @@ export class ValuesComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+  onSubmit() {
+
+console.log(this.profileform);
   }
 }
